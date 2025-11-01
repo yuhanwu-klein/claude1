@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色跑步动画 - Character Running Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+        }
+
+        .character-container {
+            position: relative;
+            animation: run-bounce 0.6s ease-in-out infinite;
+        }
+
+        .character {
+            width: 300px;
+            height: auto;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+            animation: character-tilt 0.6s ease-in-out infinite;
+        }
+
+        /* 跑步时的上下弹跳效果 */
+        @keyframes run-bounce {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        /* 跑步时的身体倾斜效果 */
+        @keyframes character-tilt {
+            0%, 100% {
+                transform: rotate(-5deg) scaleX(1);
+            }
+            25% {
+                transform: rotate(-8deg) scaleX(1);
+            }
+            50% {
+                transform: rotate(-3deg) scaleX(1);
+            }
+            75% {
+                transform: rotate(-8deg) scaleX(1);
+            }
+        }
+
+        /* 背景移动效果，营造跑步感 */
+        .background-lines {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 100px,
+                    rgba(255,255,255,0.1) 100px,
+                    rgba(255,255,255,0.1) 102px
+                );
+            animation: background-scroll 2s linear infinite;
+        }
+
+        @keyframes background-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-200px);
+            }
+        }
+
+        /* 控制面板 */
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        .controls h2 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .control-item {
+            margin: 10px 0;
+        }
+
+        .control-item label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .control-item input[type="range"] {
+            width: 200px;
+        }
+
+        .control-item button {
+            padding: 8px 15px;
+            margin: 5px 5px 5px 0;
+            border: none;
+            border-radius: 5px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .control-item button:hover {
+            background: #764ba2;
+        }
+
+        .speed-value {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* 速度指示器 */
+        .speed-indicator {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 48px;
+            font-weight: bold;
+            color: rgba(255,255,255,0.3);
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-lines"></div>
+
+    <div class="container">
+        <div class="ground"></div>
+        <div class="character-container">
+            <img src="0a1a318d43e044b0d29fdbce0db38191.jpg" alt="Art Deco Character" class="character">
+        </div>
+    </div>
+
+    <div class="controls">
+        <h2>🏃 跑步动画控制</h2>
+
+        <div class="control-item">
+            <label for="speed">动画速度:</label>
+            <input type="range" id="speed" min="0.2" max="2" step="0.1" value="1">
+            <span class="speed-value" id="speedValue">1.0x</span>
+        </div>
+
+        <div class="control-item">
+            <label>动画控制:</label>
+            <button id="pauseBtn">暂停</button>
+            <button id="resumeBtn" style="display:none;">继续</button>
+        </div>
+    </div>
+
+    <div class="speed-indicator" id="speedIndicator">RUN!</div>
+
+    <script>
+        const characterContainer = document.querySelector('.character-container');
+        const character = document.querySelector('.character');
+        const backgroundLines = document.querySelector('.background-lines');
+        const speedSlider = document.getElementById('speed');
+        const speedValue = document.getElementById('speedValue');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
+        const speedIndicator = document.getElementById('speedIndicator');
+
+        let isPaused = false;
+
+        // 速度控制
+        speedSlider.addEventListener('input', (e) => {
+            const speed = parseFloat(e.target.value);
+            speedValue.textContent = speed.toFixed(1) + 'x';
+
+            // 更新动画速度
+            const duration = 0.6 / speed;
+            const bgDuration = 2 / speed;
+
+            characterContainer.style.animationDuration = duration + 's';
+            character.style.animationDuration = duration + 's';
+            backgroundLines.style.animationDuration = bgDuration + 's';
+
+            // 更新速度指示器
+            if (speed < 0.5) {
+                speedIndicator.textContent = 'WALK';
+            } else if (speed < 1) {
+                speedIndicator.textContent = 'JOG';
+            } else if (speed < 1.5) {
+                speedIndicator.textContent = 'RUN!';
+            } else {
+                speedIndicator.textContent = 'SPRINT!';
+            }
+        });
+
+        // 暂停/继续控制
+        pauseBtn.addEventListener('click', () => {
+            characterContainer.style.animationPlayState = 'paused';
+            character.style.animationPlayState = 'paused';
+            backgroundLines.style.animationPlayState = 'paused';
+            pauseBtn.style.display = 'none';
+            resumeBtn.style.display = 'inline-block';
+            speedIndicator.textContent = 'PAUSED';
+        });
+
+        resumeBtn.addEventListener('click', () => {
+            characterContainer.style.animationPlayState = 'running';
+            character.style.animationPlayState = 'running';
+            backgroundLines.style.animationPlayState = 'running';
+            pauseBtn.style.display = 'inline-block';
+            resumeBtn.style.display = 'none';
+            speedSlider.dispatchEvent(new Event('input'));
+        });
+    </script>
+</body>
+</html>
