@@ -1,0 +1,89 @@
+{
+  "characters": [
+    {
+      "name": "Character 2 - The Jazz Singer",
+      "description": "优雅的女性角色，Art Deco风格",
+      "style_elements": {
+        "color_scheme": "黑白灰配色，高对比度",
+        "era": "1920年代",
+        "clothing": "闪片礼服裙，长手套，珍珠项链",
+        "hairstyle": "经典波浪卷发（finger waves）",
+        "pose": "手持复古麦克风，微微侧身",
+        "facial_features": "细长的眉毛，红唇，半闭的眼睛",
+        "accessories": "羽毛头饰，长烟嘴",
+        "mood": "神秘而迷人"
+      },
+      "design_notes": "与claude1相同的极简几何风格，强调曲线美和优雅姿态"
+    },
+    {
+      "name": "Character 3 - The Bartender",
+      "description": "专业的调酒师角色，Art Deco风格",
+      "style_elements": {
+        "color_scheme": "黑白灰配色，强烈对比",
+        "era": "1930年代",
+        "clothing": "白色衬衫，黑色马甲，袖口卷起",
+        "hairstyle": "整齐的中分发型，发油定型",
+        "pose": "正在调制鸡尾酒，手持调酒器",
+        "facial_features": "自信的微笑，锐利的眼神，小胡子",
+        "accessories": "领结，怀表链",
+        "mood": "专注而友好"
+      },
+      "design_notes": "简化的几何形状，注重动作的优雅性"
+    },
+    {
+      "name": "Character 4 - The Flapper",
+      "description": "时髦的摩登女郎，Art Deco风格",
+      "style_elements": {
+        "color_scheme": "黑白灰三色，优雅配比",
+        "era": "1920年代",
+        "clothing": "流苏短裙，无袖上衣，T型剪裁",
+        "hairstyle": "短发波波头（bob cut），发带装饰",
+        "pose": "跳查尔斯顿舞的姿态，一腿抬起",
+        "facial_features": "圆润的脸型，大眼睛，甜美笑容",
+        "accessories": "长串珍珠项链，手镯",
+        "mood": "活泼而叛逆"
+      },
+      "design_notes": "强调动态感和年轻活力，保持几何简化风格"
+    },
+    {
+      "name": "Character 5 - The Pianist",
+      "description": "沉思的钢琴家，Art Deco风格",
+      "style_elements": {
+        "color_scheme": "黑白灰，深沉的对比",
+        "era": "1930年代",
+        "clothing": "燕尾服，白色衬衫，领结",
+        "hairstyle": "略长的艺术家发型，微乱",
+        "pose": "坐在钢琴前，侧面轮廓，手指悬在琴键上方",
+        "facial_features": "深邃的眼神，高鼻梁，紧闭的嘴唇",
+        "accessories": "圆框眼镜，袖扣",
+        "mood": "专注而忧郁"
+      },
+      "design_notes": "强调艺术家气质，使用更多的阴影和轮廓线"
+    },
+    {
+      "name": "Character 6 - The Socialite",
+      "description": "上流社会女性，Art Deco风格",
+      "style_elements": {
+        "color_scheme": "黑白灰，奢华感",
+        "era": "1920年代",
+        "clothing": "丝绸晚礼服，披肩，皮草领",
+        "hairstyle": "精致的发髻，装饰性发夹",
+        "pose": "优雅地坐在长沙发上，手持香槟杯",
+        "facial_features": "高傲的表情，细长的眼睛，精致的妆容",
+        "accessories": "钻石耳环，手包，长手套",
+        "mood": "高贵而冷漠"
+      },
+      "design_notes": "强调奢华和精致，几何化的装饰元素"
+    }
+  ],
+  "common_style_guide": {
+    "art_style": "Art Deco极简主义",
+    "color_palette": ["#000000", "#FFFFFF", "#808080", "#C0C0C0"],
+    "geometric_approach": "使用简化的几何形状构建人物",
+    "line_work": "流畅的曲线和锐利的直线结合",
+    "shading": "平面化的阴影，强对比",
+    "composition": "优雅的姿态，动态平衡",
+    "era_reference": "1920-1930年代爵士时代",
+    "mood": "优雅、神秘、怀旧"
+  }
+}
